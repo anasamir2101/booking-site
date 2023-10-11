@@ -1,58 +1,72 @@
 import React, { useState } from 'react';
-import Bus from './sidebar_components/bus';
-import Flights from './sidebar_components/Flights';
-import Train from './sidebar_components/Train';
-import Movies from './sidebar_components/Movies';
-import Car from './sidebar_components/Car';
-import Hotels from './sidebar_components/Hotels';
-import Tours from './sidebar_components/Tours';
-import Events from './sidebar_components/Events';
+import { Link } from 'react-router-dom';
+import { AiFillCar } from 'react-icons/ai';
+import { BiBusSchool } from 'react-icons/bi';
+import { IoMdAirplane } from 'react-icons/io';
+import { BsFillTrainLightrailFrontFill } from 'react-icons/bs';
+import { BiSolidMoviePlay } from 'react-icons/bi';
+import { RiHotelLine } from 'react-icons/ri';
+import { GiMicrophone } from 'react-icons/gi';
+import { PiTreePalmThin } from 'react-icons/pi';
 
 const Sidebar = () => {
-  const [selectedLink, setSelectedLink] = useState(0);
+  const [selectedLink, setSelectedLink] = useState(null);
 
   const handleLinkClick = (index) => {
     setSelectedLink(index);
   };
 
   const links = [
-    { component: <Bus /> },
-    { component: <Flights /> },
-    { component: <Train /> },
-    { component: <Movies /> },
-    { component: <Car /> },
-    { component: <Hotels /> },
-    { component: <Events /> },
-    { component: <Tours /> },
+    { icon: BiBusSchool, link: 'Bus' },
+    { icon: IoMdAirplane, link: 'Flights' },
+    { icon: BsFillTrainLightrailFrontFill, link: 'Train' },
+    { icon: BiSolidMoviePlay, link: 'Movies' },
+    { icon: AiFillCar, link: 'Car' },
+    { icon: RiHotelLine, link: 'Hotels' },
+    { icon: GiMicrophone, link: 'Events' },
+    { icon: PiTreePalmThin, link: 'Tours' },
   ];
 
   return (
-    <aside className='pt-7 pl-3 w-[225px] '>
-      {links.map((link, index) => (
-        <LinkItem
-          key={index}
-          index={index}
-          component={link.component}
-          selected={selectedLink === index}
-          onClick={() => handleLinkClick(index)}
-        />
-      ))}
-    </aside>
+    <>
+      <div className='temporary-box2'></div>
+      <aside
+        className='pt-5 pl-3 w-[250px] border-r-2 h-[90vh]'
+        id='sidebar_fixed'
+      >
+        {links.map((item, index) => {
+          const { icon: Icon, link } = item;
+          const isSelected = selectedLink === index;
+
+          return (
+            <LinkItem
+              key={index}
+              link={link}
+              icon={Icon}
+              isSelected={isSelected}
+              onClick={() => handleLinkClick(index)}
+            />
+          );
+        })}
+      </aside>
+    </>
   );
 };
 
-const LinkItem = ({ component, selected, onClick }) => {
+const LinkItem = ({ link, icon: Icon, isSelected, onClick }) => {
+  const LinkName = link;
+
   return (
-    <div
-      className={`${selected ? 'bg-gray-100 w-[200px] rounded-md ' : ''}`}
-      onClick={onClick}
-    >
-      <ul className=''>
+    <div className={`w-[200px] rounded-md ${isSelected ? 'bg-gray-100' : ''}`}>
+      <ul>
         <li
-          className='cursor-pointer flex items-center pl-4 my-1 h-[45px] w-[200px]
-        hover:bg-gray-100  rounded-md'
+          className={`cursor-pointer text-sm flex items-center pl-4 my-1 h-[45px] w-[200px] rounded-md gap-3 hover:bg-gray-100 hover:font-semibold ${
+            isSelected ? 'bg-gray-100' : ''
+          }`}
+          onClick={onClick}
         >
-          {component}
+          <Icon />
+          <Link to={link}>{LinkName}</Link>
         </li>
       </ul>
     </div>

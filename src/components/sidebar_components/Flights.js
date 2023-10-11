@@ -1,12 +1,11 @@
-import React from 'react';
-import { TiPlane } from 'react-icons/ti';
+import React, { useState } from 'react';
 
 const Flights = () => {
   return (
-    <a href='/flights' className='flex items-center gap-4'>
-      <TiPlane />
-      <p>Flights</p>
-    </a>
+    <section className='w-full  ml-[245px] mt-[-2px] bg-blue-500 p-4'>
+      <h1>Search for Flights</h1>
+      <p>Find the best deals for your Flights travel</p>
+    </section>
   );
 };
 
